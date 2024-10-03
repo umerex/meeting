@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/timegrid": "^6.1.15"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^4.7.0",
+    "webpack-notifier": "^1.15.0"
+  },
+  "scripts": {
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production"
+  }
+}

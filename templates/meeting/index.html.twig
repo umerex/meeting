@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Monthly Calendar{% endblock %}
+
+{% block body %}
+    <a href="{{ path('weekly_calendar') }}">Weekly View</a> | 
+<a href="{{ path('monthly_calendar') }}">Monthly View</a>
+
+<a href="{{ path('monthly_calendar', {'year': prevYear, 'month': prevMonth}) }}">Previous Month</a>
+<a href="{{ path('monthly_calendar', {'year': nextYear, 'month': nextMonth}) }}">Next Month</a>
+
+
+    <h1>Calendar for {{ month }}/{{ year }}</h1>
+    
+    <table class="table table-bordered calendar-table">
+        <thead>
+            <tr>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set day = 1 %}
+            {% for week in 1..6 %}
+    <tr>
+        {% for dow in 1..7 %}
+            {% if week == 1 and dow < startDayOfWeek %}
+                <td></td>
+            {% elseif day > daysInMonth %}
+                <td></td>
+            {% else %}
+                <td data-date="{{ year }}-{{ month|date('m') }}-{{ day|date('d') }}">
+                    {{ day }}
+                    {% for meeting in meetings %}
+                        {% if meeting.startDateTime|date('Y-m-d') == year ~ '-' ~ month|date('m') ~ '-' ~ day|date('d') %}
+                            <div class="meeting-title">{{ meeting.title }}</div>
+                        {% endif %}
+                    {% endfor %}
+                    {% set day = day + 1 %}
+                </td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+{% endfor %}
+
+        </tbody>
+    </table>
+
+    <style>
+        .calendar-table {
+            width: 100%;
+            table-layout: fixed;
+        }
+        .calendar-table td {
+            height: 100px; /* Adjust the height as needed */
+            vertical-align: top;
+            padding: 5px;
+            border: 1px solid lightgrey;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
